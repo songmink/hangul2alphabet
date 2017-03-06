@@ -149,11 +149,9 @@ public class hangul2alphabet {
 	
 	public static void main(String args[]){
 		
-		String jaso;
-		String alph;
-		
-		jaso = separate("123 한글 abc");
-		alph = toAlphabet(jaso);
+		/* sample */
+		String jaso = separate("123 한글 abc");
+		String alph = toAlphabet(jaso);
 		
 		System.out.println(jaso);
 		System.out.println(alph);	
