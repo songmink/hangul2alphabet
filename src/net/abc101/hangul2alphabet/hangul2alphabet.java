@@ -1,5 +1,10 @@
 package net.abc101.hangul2alphabet;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class hangul2alphabet {
 
 	/**
@@ -108,11 +113,12 @@ public class hangul2alphabet {
 	public static void main(String args[]) {
 
 		/* sample */
-		String jaso = separate("123 한글 abc");
+		String words = "한글만 분리하여 알파벳으로 바꿈니다.";
+		String jaso = separate(words);
 		String alph = toAlphabet(jaso);
 
+		System.out.println(words);
 		System.out.println(jaso);
-		System.out.println(alph);
+		System.out.println(alph);	
 	}
-
 }
