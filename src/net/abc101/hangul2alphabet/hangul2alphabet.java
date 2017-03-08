@@ -1,8 +1,10 @@
 package net.abc101.hangul2alphabet;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class hangul2alphabet {
@@ -26,7 +28,8 @@ public class hangul2alphabet {
 	/**
 	 * 한글 종성 유니코드 리스트(28) Last sound Korean character unicode
 	 * 
-	 * Null, ㄱ, ㄲ, ㄳ, ㄴ, ㄵ, ㄶ, ㄷ, ㄹ, ㄺ, ㄻ, ㄼ, ㄽ, ㄾ, ㄿ, ㅀ, ㅁ, ㅂ, ㅄ, ㅅ, ㅆ, ㅇ, ㅈ, ㅊ, ㅋ, ㅌ, ㅍ, ㅎ,
+	 * Null, ㄱ, ㄲ, ㄳ, ㄴ, ㄵ, ㄶ, ㄷ, ㄹ, ㄺ, ㄻ, ㄼ, ㄽ, ㄾ, ㄿ, ㅀ, ㅁ, ㅂ, ㅄ, ㅅ, ㅆ, ㅇ, ㅈ,
+	 * ㅊ, ㅋ, ㅌ, ㅍ, ㅎ,
 	 */
 
 	public static char[] arrayJongsung = { 0x0000, 0x3131, 0x3132, 0x3133, 0x3134, 0x3135, 0x3136, 0x3137, 0x3139,
@@ -114,11 +117,49 @@ public class hangul2alphabet {
 
 		/* sample */
 		String words = "한글만 분리하여 알파벳으로 바꿈니다.";
-		String jaso = separate(words);
-		String alph = toAlphabet(jaso);
+		String jaso = "";
+		String alph = "";
+
+		jaso = separate(words);
+		alph = toAlphabet(jaso);
 
 		System.out.println(words);
 		System.out.println(jaso);
-		System.out.println(alph);	
+		System.out.println(alph);
+
+		/* Read Korean words list csv and output the result csv */
+		String csvFileR = "korean-words.csv";
+		String csvFileW = "korean-words-alphabet.csv";
+
+		BufferedReader br = null;
+		BufferedWriter bw = null;
+
+		String word = "";
+		String result = "";
+
+		try {
+			br = new BufferedReader(new FileReader(csvFileR));
+			bw = new BufferedWriter(new FileWriter(csvFileW));
+
+			while ((word = br.readLine()) != null) {
+				jaso = separate(word);
+				alph = toAlphabet(jaso);
+				result = word + "," + jaso + "," + alph + "\n";
+				bw.write(result);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
 	}
 }
